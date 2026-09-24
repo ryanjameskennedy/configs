@@ -5,7 +5,7 @@ Nextflow configs for running [JASEN](https://github.com/genomic-medicine-sweden/
 | Config | Server | CPU | RAM | CPUs used | Memory used |
 | --- | --- | --- | --- | --- | --- |
 | `jasen/thehorse.config` | thehorse | Intel Core i7-14700F (28 threads) | 125 GB | 28 | 112 GB |
-| `jasen/thedonkey.config` | thedonkey (mp-bioinfo) | Intel Core i5-13600KF (20 threads) | 188 GB | 15 | 141 GB |
+| `jasen/thedonkey.config` | thedonkey | Intel Core i5-13600KF (20 threads) | 188 GB | 15 | 141 GB |
 
 Each config sets `process.executor = 'local'`, caps the total CPUs and memory Nextflow uses at once (`executor`), and shrinks any task that requests more than the server has (`process.resourceLimits`).
 
@@ -15,7 +15,13 @@ Each config sets `process.executor = 'local'`, caps the total CPUs and memory Ne
 
 - JASEN installed with its containers, references and databases (`make install` in the JASEN repo, see the [installation docs](https://jasen.readthedocs.io/en/latest/install.html))
 - Nextflow v24 or later
-- Apptainer on thehorse, Singularity on thedonkey
+- Singularity
+
+`thedonkey.config` expects the databases and containers on the cache NVMe rather than inside the JASEN repo, so install them there:
+
+```bash
+make install ASSETS_DIR=/mnt/cache/dbs CONTAINERS_DIR=/mnt/cache/singularity
+```
 
 ## Running JASEN
 
@@ -24,7 +30,7 @@ On thehorse, add the config with `-c` alongside the usual species, platform and 
 ```bash
 nextflow run /path/to/jasen/main.nf \
     -c /path/to/configs/jasen/thehorse.config \
-    -profile staphylococcus_aureus,illumina,apptainer \
+    -profile staphylococcus_aureus,illumina,singularity \
     -work-dir /path/to/work \
     --csv samplelist.csv \
     --outdir /path/to/results
