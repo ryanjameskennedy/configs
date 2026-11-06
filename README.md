@@ -1,11 +1,12 @@
 # configs
 
-Nextflow configs for running [JASEN](https://github.com/genomic-medicine-sweden/jasen) on our local servers with the local executor.
+Nextflow configs for running [JASEN](https://github.com/genomic-medicine-sweden/jasen) and [sinklink](https://github.com/ryanjameskennedy/sinklink) on our local servers with the local executor.
 
 | Config | Server | CPU | RAM | CPUs used | Memory used |
 | --- | --- | --- | --- | --- | --- |
 | `jasen/thehorse.config` | thehorse | Intel Core i7-14700F (28 threads) | 125 GB | 28 | 112 GB |
 | `jasen/thedonkey.config` | thedonkey | Intel Core i5-13600KF (20 threads) | 188 GB | 15 | 141 GB |
+| `sinklink/thedonkey.config` | thedonkey | Intel Core i5-13600KF (20 threads) | 188 GB | 15 | 141 GB |
 
 Each config sets `process.executor = 'local'`, caps the total CPUs and memory Nextflow uses at once (`executor`), and shrinks any task that requests more than the server has (`process.resourceLimits`).
 
@@ -57,6 +58,19 @@ To confirm the config is applied before a run:
 ```bash
 nextflow -c /path/to/configs/jasen/thedonkey.config config /path/to/jasen -flat -profile staphylococcus_aureus,illumina | grep -E "executor|resourceLimits|_db|workDir|outdir"
 ```
+
+## Running sinklink
+
+sinklink is an nf-core pipeline, so the config only holds resources and infrastructure, and the database paths are parameters in `sinklink/thedonkey.yaml`:
+
+```bash
+tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.1.0 -profile apptainer \
+    -c /path/to/configs/sinklink/thedonkey.config \
+    -params-file /path/to/configs/sinklink/thedonkey.yaml \
+    --input samplesheet.csv --metadata metadata.csv --outdir results'
+```
+
+The config resizes the nf-core labels (`process_single` to `process_high`) closer to JASEN's per-tool settings, and gives SKESA, chewBBACA, gambitcore and Kraken2 their JASEN values directly. The [sinklink docs](https://sinklink.readthedocs.io/en/latest/setup/servers.html) list every tool with its nf-core and thedonkey resources.
 
 ## Kraken
 
