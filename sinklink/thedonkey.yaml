@@ -1,0 +1,3 @@
+schemas_dir: /mnt/cache/dbs/vask/schemas
+kraken_db: /mnt/cache/dbs/kraken2/standard_2025-06
+gambit_db: /mnt/cache/dbs/gambit_db
