@@ -70,7 +70,7 @@ tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.1.0 -profile 
     --input samplesheet.csv --metadata metadata.csv --outdir results'
 ```
 
-The config resizes the nf-core labels (`process_single` to `process_high`) closer to JASEN's per-tool settings and gives Kraken2 its JASEN memory directly. The [sinklink docs](https://sinklink.readthedocs.io/en/latest/setup/servers.html) list every tool with its nf-core and thedonkey resources.
+The config resizes the nf-core labels (`process_single` to `process_high`) closer to JASEN's per-tool settings. sinklink uses the Standard-16 Kraken2 database (`/mnt/cache/dbs/kraken2/standard_16gb_20260626`), which needs at most 16 GB, so Kraken2 follows its label too. The [sinklink docs](https://sinklink.readthedocs.io/en/latest/setup/servers.html) list every tool with its nf-core and thedonkey resources.
 
 ## Kraken
 
