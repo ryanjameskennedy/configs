@@ -1,5 +1,5 @@
-schemas_dir: /mnt/cache/dbs/vask/schemas
+schemas_dir: /mnt/cache/dbs/schemas
 kraken_db: /mnt/cache/dbs/kraken2/standard_16gb_20260626
 gambit_db: /mnt/cache/dbs/gambit_db
-deacon_index: /mnt/cache/dbs/vask/deacon/panhuman-1.k31w15.idx
-references_dir: /mnt/cache/dbs/vask/references
+deacon_index: /mnt/cache/dbs/deacon/panhuman-1.k31w15.idx
+references_dir: /mnt/cache/dbs/references
