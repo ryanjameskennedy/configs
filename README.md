@@ -64,7 +64,7 @@ nextflow -c /path/to/configs/jasen/thedonkey.config config /path/to/jasen -flat 
 sinklink is an nf-core pipeline, so the config only holds resources and infrastructure, and the database paths are parameters in `sinklink/thedonkey.yaml`:
 
 ```bash
-tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.1.0 -profile apptainer \
+tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.2.0 -profile singularity \
     -c /path/to/configs/sinklink/thedonkey.config \
     -params-file /path/to/configs/sinklink/thedonkey.yaml \
     --input samplesheet.csv --metadata metadata.csv --outdir results'
