@@ -64,13 +64,13 @@ nextflow -c /path/to/configs/jasen/thedonkey.config config /path/to/jasen -flat 
 sinklink is an nf-core pipeline, so the config only holds resources and infrastructure, and the database paths are parameters in `sinklink/thedonkey.yaml`:
 
 ```bash
-tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.2.0 -profile singularity \
+tmux new -s sinklink 'nextflow run ryanjameskennedy/sinklink -r v0.4.0 -profile singularity \
     -c /path/to/configs/sinklink/thedonkey.config \
     -params-file /path/to/configs/sinklink/thedonkey.yaml \
     --input samplesheet.csv --metadata metadata.csv --outdir results'
 ```
 
-The config resizes the nf-core labels (`process_single` to `process_high`) closer to JASEN's per-tool settings. sinklink uses the Standard-16 Kraken2 database (`/mnt/cache/dbs/kraken2/standard_16gb_20260626`), which needs at most 16 GB, so Kraken2 follows its label too. The [sinklink docs](https://sinklink.readthedocs.io/en/latest/setup/servers.html) list every tool with its nf-core and thedonkey resources.
+The config resizes the nf-core labels (`process_single` to `process_high`) closer to JASEN's per-tool settings. sinklink uses the full Standard Kraken2 database (`/mnt/cache/dbs/kraken2/standard_20260626`, 103 GB, from `make kraken_db ASSETS_DIR=/mnt/cache/dbs` in the sinklink checkout). Kraken2 memory-maps it, so the config reserves 110 GB for `KRAKEN2_KRAKEN2` to keep other tasks from pushing it out of the page cache; only one Kraken2 task runs at a time. The [sinklink docs](https://sinklink.readthedocs.io/en/latest/setup/servers.html) list every tool with its nf-core and thedonkey resources.
 
 ## Kraken
 
